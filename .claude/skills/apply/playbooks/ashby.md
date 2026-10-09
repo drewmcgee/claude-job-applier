@@ -1,0 +1,17 @@
+# Ashby playbook (jobs.ashbyhq.com)
+- Open `<posting URL>/application`. Get the question list without the browser: POST to `https://jobs.ashbyhq.com/api/non-user-graphql?op=ApiJobPosting` (query `jobPosting(organizationHostedJobsPageName, jobPostingId) { applicationForm { sections { fieldEntries { ... on FormFieldEntry { isRequired field } } } } surveyForms { ... } }`).
+- Fields live in `div[class*=fieldEntry]`; find each by its `label` text. Text inputs: native value setter + input/change/blur events works.
+- Single and multi choice: `input[type=radio]` / `input[type=checkbox]` inside `fieldset`, labeled with `label[for=id]`. JS `.click()` works. EEO survey questions are on the same page.
+- Yes/No (Boolean) questions are two buttons in the field entry. JS `.click()` the "Yes" button; it gets an `_active` class.
+- Resume: there are TWO file inputs. The first is "Autofill from resume", which overwrites fields, so skip it. Use `find` "Resume file input" and upload to the one labeled "Resume".
+- Location autocomplete: type the city in short chunks (e.g. "Santa", then " Barbara"). One long `type` got wiped. Read the `[role=option]` list, then select the right one with JS mousedown/mouseup/click on that option. Don't press Enter.
+- Form loads slowly ("Fetching application form"). Wait about 3s before scanning.
+- GraphQL: `compensationTierSummary` gives the salary range, and `descriptionHtml` on field entries gives the full question text. `descriptionPlainText` is rejected.
+- Multi-select and EEO fieldsets sit OUTSIDE `div[class*=fieldEntry]`. Find them by legend/label text, `.click()` the input whose `label[for]` matches, and verify with `input:checked`.
+- ValueSelect questions may be a combobox (input + button) instead of radios. JS focus, type a real-keystroke filter, then JS mousedown/mouseup/click the `[role=option]`.
+- Date fields ("Pick date..."): JS focus, type "MM/DD/YYYY" with real keystrokes, then Tab.
+- Education: type the school name in short chunks and pick the exact option with mousedown/click. Degree/Field use the native setter; the date fields are 4 native `<select>`s (set the value and dispatch change).
+- The final button is "Submit Application". Never click it.
+- Hidden tabs may not hydrate React (seen on Greenhouse). If JS sets don't stick, take a `scale 0.1` screenshot of the tab first.
+- Untested idea worth trying next Ashby run: the Greenhouse React-internals approach (see `greenhouse.md`) may also work here, removing real keystrokes.
+- **Phantom-empty fields (seen: last name and a consent checkbox showed filled but failed on submit).** Not reproduced in tests; most likely set before that form section had loaded its React code. Set text only on fields whose element has a `__reactProps*` key, and always finish with `precheck.js`.

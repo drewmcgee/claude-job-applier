@@ -1,0 +1,49 @@
+{
+  "_readme": "Machine-readable answers used by the Greenhouse planner (gh_plan.py). /setup fills this in. Lists are option preferences in order (first one found on the form wins). null = leave as TODO for Claude/you to decide per form.",
+  "resume_path": "",
+  "contact": {
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "phone": "",
+    "linkedin": "",
+    "github": ""
+  },
+  "greenhouse_standard": {
+    "country": "United States +1",
+    "candidate-location": {"s": "", "v": ""},
+    "school--0": {"s": "", "v": ""},
+    "degree--0": "",
+    "discipline--0": {"s": "", "v": ""},
+    "start-month--0": "",
+    "start-year--0": "",
+    "end-month--0": "",
+    "end-year--0": ""
+  },
+  "answers": {
+    "us_person": null,
+    "work_authorized": null,
+    "needs_sponsorship": null,
+    "worked_here_before": ["No", "I have not", "Never"],
+    "willing_to_relocate": null,
+    "onsite_ok": null,
+    "security_clearance": null,
+    "conflict_questions": ["No"],
+    "most_recent_company": null,
+    "current_company": null,
+    "start_date": null,
+    "docker_k8s_bigdata": null,
+    "zip": null,
+    "city": null
+  },
+  "eeo": {
+    "transgender": null,
+    "gender": null,
+    "hispanic_latino": null,
+    "race": null,
+    "veteran": null,
+    "disability": null,
+    "sexual_orientation": null,
+    "age_range": null
+  }
+}
